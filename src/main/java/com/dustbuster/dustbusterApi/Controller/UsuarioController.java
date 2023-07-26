@@ -4,6 +4,7 @@ package com.dustbuster.dustbusterApi.Controller;
 import com.dustbuster.dustbusterApi.Entity.Usuario;
 import com.dustbuster.dustbusterApi.Repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,9 @@ public class UsuarioController {
 
     @Autowired
     private IUsuarioRepository usuarioRepository;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     // Obtener todos los usuarios
     @GetMapping
@@ -41,7 +45,7 @@ public class UsuarioController {
         if (usuarioExistente.isPresent()) {
             Usuario usuario = usuarioExistente.get();
             usuario.setCorreo(usuarioActualizado.getCorreo());
-            usuario.setPassword(usuarioActualizado.getPassword());
+            usuario.setPassword(  encoder.encode(usuarioActualizado.getPassword()));
             // Actualiza otros campos según corresponda
             return usuarioRepository.save(usuario);
         }

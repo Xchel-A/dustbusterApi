@@ -2,6 +2,7 @@ package com.dustbuster.dustbusterApi.Entity;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,8 +16,11 @@ import java.util.List;
 @Table(name="Usuarios")
 public class Usuario {
 
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long IdUser;
+
+
     @Column(unique = true, length = 50)
     @NotEmpty
     private String correo;
@@ -27,7 +31,7 @@ public class Usuario {
 
     private Boolean enabled;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "correo", referencedColumnName = "correo")
+    @JoinColumn(name = "IdUser", referencedColumnName = "IdUser")
     private List<Rol> authorities;
 
 

@@ -38,7 +38,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthRequestBean authRequestBean) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody Usuario authRequestBean) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequestBean.getCorreo(), authRequestBean.getPassword()));
 
@@ -56,20 +56,14 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody AuthRequestBean authRequestBean) {
-        if (usuarioRepository.existsByCorreo(authRequestBean.getCorreo())) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody Usuario usuario) {
+        if (usuarioRepository.existsByCorreo(usuario.getCorreo())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponseBean("Error: Username is already taken!"));
         }
-
-        Usuario usuario = new Usuario(
-                authRequestBean.getCorreo(),
-                encoder.encode(authRequestBean.getPassword()),
-                authRequestBean.getEnabled(),
-                authRequestBean.getAuthorities()
-        );
-
+        String pass = encoder.encode(usuario.getPassword());
+        usuario.setPassword(pass);
         usuarioRepository.save(usuario);
         return ResponseEntity.ok(new MessageResponseBean("User registered successfully!"));
     }
