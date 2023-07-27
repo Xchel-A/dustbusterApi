@@ -14,7 +14,7 @@ public class Rol {
 
     @Column(name = "authority")
     private String authority;
-    @Column(name = "IdUser")
-    private Long IdUser;
+    @Column(name = "user_id")
+    private Long UserId;
 
 }

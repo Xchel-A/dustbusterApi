@@ -18,9 +18,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
@@ -38,7 +39,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody Usuario authRequestBean) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthRequestBean authRequestBean) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequestBean.getCorreo(), authRequestBean.getPassword()));
 
@@ -50,13 +51,29 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponseBean(jwt,"Bearer",
-                userDetails.getUsername(),
-                roles));
+        // Actualizar la fecha de última sesión
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreo(authRequestBean.getCorreo());
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            usuario.setUltimaSesion(new Timestamp(System.currentTimeMillis()));
+
+            usuarioRepository.save(usuario);
+
+        } else {
+            // Manejar el caso si el usuario no existe
+            // Puedes lanzar una excepción, crear un nuevo usuario, etc.
+            return ResponseEntity.badRequest().body(new MessageResponseBean("Usuario no encontrado."));
+        }
+        Usuario data = usuarioOptional.get();
+        data.setPassword(null);
+
+        return ResponseEntity.ok(new JwtResponseBean(jwt, "Bearer",
+               data));
     }
 
+
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody Usuario usuario) {
+    public ResponseEntity<MessageResponseBean> registerUser(@Valid @RequestBody Usuario usuario) {
         if (usuarioRepository.existsByCorreo(usuario.getCorreo())) {
             return ResponseEntity
                     .badRequest()
@@ -64,9 +81,9 @@ public class AuthController {
         }
         String pass = encoder.encode(usuario.getPassword());
         usuario.setPassword(pass);
+        usuario.setUltimaSesion(new Timestamp(System.currentTimeMillis()));
+        usuario.setFechaRegistro(new Timestamp(System.currentTimeMillis()));// Setear la fecha de última sesión al registrarse
         usuarioRepository.save(usuario);
         return ResponseEntity.ok(new MessageResponseBean("User registered successfully!"));
     }
-
-
 }
