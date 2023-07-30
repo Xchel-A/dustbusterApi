@@ -50,7 +50,7 @@ public class UsuarioController {
         if (usuarioExistente.isPresent()) {
             Usuario usuario = usuarioExistente.get();
             usuario.setNombreCompleto(usuarioActualizado.getNombreCompleto());
-            usuario.setTelefono(usuarioActualizado.getTelefono());
+            usuario.setNumeroTelefono(usuarioActualizado.getNumeroTelefono());
             usuario.setCorreo(usuarioActualizado.getCorreo());
             usuario.setPassword(encoder.encode(usuarioActualizado.getPassword())); // Hasheamos la nueva contraseña
             usuario.setEnabled(usuarioActualizado.getEnabled());
