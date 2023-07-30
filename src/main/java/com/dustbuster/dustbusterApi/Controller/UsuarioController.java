@@ -1,6 +1,5 @@
 package com.dustbuster.dustbusterApi.Controller;
 
-
 import com.dustbuster.dustbusterApi.Entity.Usuario;
 import com.dustbuster.dustbusterApi.Repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +54,7 @@ public class UsuarioController {
             usuario.setCorreo(usuarioActualizado.getCorreo());
             usuario.setPassword(encoder.encode(usuarioActualizado.getPassword())); // Hasheamos la nueva contraseña
             usuario.setEnabled(usuarioActualizado.getEnabled());
-            usuario.setDireccion(usuarioActualizado.getDireccion());
+
             usuario.setTipoUsuario(usuarioActualizado.getTipoUsuario());
             usuario.setFotoPerfil(usuarioActualizado.getFotoPerfil());
             usuario.setFechaRegistro(usuarioActualizado.getFechaRegistro());

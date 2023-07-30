@@ -51,6 +51,9 @@ public class Servicio {
     @Column(name = "hora_fin")
     private Time horaFin;
 
+    private String latitud;
+    private String longitud;
+
     /**
      * , 'pendiente' = 0, 'en_progreso'=1, 'completado'=2)"
      */
