@@ -36,8 +36,8 @@ public class Usuario {
     private String nombreCompleto;
 
     @Size(max = 15)
-    @Column(name = "numero_telefono")
-    private String numeroTelefono;
+    @Column(name = "telefono")
+    private String telefono;
 
     @NotEmpty
     @Size(max = 100)
