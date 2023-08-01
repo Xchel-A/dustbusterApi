@@ -30,6 +30,9 @@ public class Usuario {
     @Column(name = "user_id")
     private Long UserId;
 
+    @Column(name = "user_idOpenpay")
+    private String UserIdOpenpay;
+
     @NotEmpty
     @Size(max = 100)
     @Column(name = "nombre_completo")
@@ -49,13 +52,6 @@ public class Usuario {
     private String password;
     private Boolean enabled;
 
-
-    @Size(max = 200)
-    private String direccion;
-    @Size(max = 200)
-    private String ciudad;
-    @Size(max = 200)
-    private String estado;
     @Size(max = 200)
     private String curp;
 
