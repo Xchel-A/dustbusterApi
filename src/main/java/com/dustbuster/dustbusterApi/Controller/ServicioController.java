@@ -71,4 +71,21 @@ public class ServicioController {
         servicioRepository.delete(servicio);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("byidcliente/{id}")
+    public ResponseEntity<List<Servicio>> obtenerServicioPorIdCliente(@PathVariable Long id) {
+        List<Servicio> servicios = servicioRepository.findByClienteId(id);
+        if (servicios.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(servicios);
+    }
+
+    @GetMapping("byidlimpiador/{id}")
+    public ResponseEntity<List<Servicio>> obtenerServicioPorIdLimpiador(@PathVariable Long id) {
+        List<Servicio> servicios = servicioRepository.findByLimpiadorId(id);
+        if (servicios.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(servicios);
+    }
 }
