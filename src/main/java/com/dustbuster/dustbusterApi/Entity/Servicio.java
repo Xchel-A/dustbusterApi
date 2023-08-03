@@ -30,6 +30,9 @@ public class Servicio {
     @Column(name = "descripcion_servicio", columnDefinition = "TEXT")
     private String descripcionServicio;
 
+    @Column(name = "urlImagen_servicio", columnDefinition = "TEXT")
+    private String urlImagenServicio;
+
     @Column(name = "tamano_inmueble", length = 50)
     private String tamanoInmueble;
 
