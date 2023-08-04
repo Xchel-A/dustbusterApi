@@ -56,6 +56,7 @@ public class Servicio {
 
     private String latitud;
     private String longitud;
+    private String direccion;
 
     /**
      * , 'pendiente' = 0, 'en_progreso'=1, 'completado'=2)"
