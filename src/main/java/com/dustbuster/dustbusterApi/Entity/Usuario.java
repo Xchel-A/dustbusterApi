@@ -50,6 +50,8 @@ public class Usuario {
     @Column(nullable = false)
     @NotEmpty
     private String password;
+
+    @Column(columnDefinition = "BIT(1)")
     private Boolean enabled;
 
     @Size(max = 200)

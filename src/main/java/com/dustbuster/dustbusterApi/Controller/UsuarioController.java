@@ -52,17 +52,13 @@ public class UsuarioController {
             usuario.setNombreCompleto(usuarioActualizado.getNombreCompleto());
             usuario.setNumeroTelefono(usuarioActualizado.getNumeroTelefono());
             usuario.setCorreo(usuarioActualizado.getCorreo());
-            usuario.setPassword(encoder.encode(usuarioActualizado.getPassword())); // Hasheamos la nueva contraseña
             usuario.setEnabled(usuarioActualizado.getEnabled());
-
             usuario.setTipoUsuario(usuarioActualizado.getTipoUsuario());
             usuario.setFotoPerfil(usuarioActualizado.getFotoPerfil());
             usuario.setFechaRegistro(usuarioActualizado.getFechaRegistro());
             usuario.setUltimaSesion(usuarioActualizado.getUltimaSesion());
             usuario.setAuthorities(usuarioActualizado.getAuthorities());
-
             // Actualizar otros campos según corresponda
-
             return usuarioRepository.save(usuario);
         }
         return null; // O puedes lanzar una excepción si no se encuentra el usuario

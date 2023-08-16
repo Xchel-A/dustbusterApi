@@ -54,8 +54,13 @@ public class Servicio {
     @Column(name = "hora_fin")
     private Time horaFin;
 
+    @Column(name = "latitud")
     private String latitud;
+
+    @Column(name = "longitud")
     private String longitud;
+
+    @Column(name = "direccion")
     private String direccion;
 
     /**
